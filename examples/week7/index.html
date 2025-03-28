@@ -39,7 +39,7 @@
     </nav>
 
     <!-- Mobile Menu (Hidden by default) -->
-    <div class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 z-40">
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 z-40">
       <div class="fixed inset-y-0 right-0 max-w-xs w-full bg-white shadow-xl">
         <div class="flex justify-end p-6">
           <button class="text-gray-500 hover:text-gray-700">
@@ -180,7 +180,7 @@
         <div class="max-w-3xl mx-auto">
           <h2 class="text-4xl font-bold text-center text-blue-800 mb-16">立即註冊</h2>
           <form class="bg-white rounded-xl shadow-lg p-8">
-            <div class="space-y-6">
+            <div id="form-content" class="space-y-6">
               <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-2">姓名</label>
                 <input 
@@ -237,6 +237,22 @@
           </form>
         </div>
       </section>
+
+      <!-- Success Message (Hidden by default) -->
+      <div id="success-message" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 z-50 flex items-center justify-center">
+        <div class="bg-white p-8 rounded-xl max-w-md mx-4">
+          <div class="text-center">
+            <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">表單提交成功！</h3>
+            <p class="text-gray-600 mb-6">我們將盡快與您聯絡</p>
+            <button onclick="hideSuccessMessage()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+              關閉
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- 頁尾資訊 -->
@@ -319,9 +335,50 @@
       <div class="border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-6 py-6">
           <p class="text-center text-gray-400">&copy; 2024 網頁設計學習中心. All rights reserved.</p>
-        </div>
+        </div class="">
       </div>
     </footer>
+
+    <script>
+      // Mobile menu functionality
+      const mobileMenuButton = document.querySelector('button.md\\:hidden');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const closeMenuButton = mobileMenu.querySelector('button');
+
+      function toggleMobileMenu() {
+        mobileMenu.classList.toggle('hidden');
+      }
+
+      mobileMenuButton.addEventListener('click', toggleMobileMenu);
+      closeMenuButton.addEventListener('click', toggleMobileMenu);
+
+      // Close menu when clicking outside
+      mobileMenu.addEventListener('click', (e) => {
+        if (e.target === mobileMenu) {
+          toggleMobileMenu();
+        }
+      });
+
+      // Form handling
+      const form = document.querySelector('form');
+      const formContent = document.getElementById('form-content');
+      const successMessage = document.getElementById('success-message');
+
+      function showSuccessMessage() {
+        successMessage.classList.remove('hidden');
+      }
+
+      function hideSuccessMessage() {
+        successMessage.classList.add('hidden');
+        // Reset form
+        form.reset();
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        showSuccessMessage();
+      });
+    </script>
 
     <!-- 
     練習重點：
